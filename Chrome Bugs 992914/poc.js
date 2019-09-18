@@ -1,4 +1,3 @@
-<code>
 function f() {
     let o = {foo: 1.1};
     o[5] = 5; //keyed v12 0x8fadaa0bdd9
@@ -18,4 +17,3 @@ for(let i = 0 ; i < 5000;i++)
 	console.log(i);
 
 console.log(f());
-</code>
