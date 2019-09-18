@@ -30,9 +30,9 @@ foo1 foo2 foo3 foo4
 
 ㄴ construct new map -> split map을 하면서 쓰게됨
 
-poc로 보자면 차피 target_map은 루트임 ㅅㄱ represation이나 뭐나 다 안맞음 ㅇㅇ
+POC로 따지면 조건에 맞는 부분들(Representation같은 것들이 맞지 않아서 맵을 새로 만들어서 ROOT MAP에 덮어쓴다)
 
-중간에 몇개만 맞거나 그런거는 그 이후에 (FOO를 찾았으면 FOO를 가지고있는 상태의 MAP) transitions에 해당하는 그게 있는게 아니기때문에 deprecated map이 되지않음
+중간에 몇개만 맞거나 그런거는 그 이후에 (FOO를 찾았으면 FOO를 가지고있는 상태의 MAP) transitions에 해당하는 그게 있는게 아니기때문에 deprecated map이 되지않는다
 
 poc처럼 못찾았다면?
 
@@ -40,10 +40,10 @@ TRANSITIONS MAP -> ROOT
 SPLIT_NOF SEARCH TARGET -> FOO
 
 ROOT에는 FOO를 가지고있는게 있음 REPRESIONS같은것이 다를뿐
-그 다른 MAP을 찾고 그 MAP에 해당하는 transitions들을 싺다 deprecated map으로 지정함
+그 다른 MAP을 찾고 그 MAP에 해당하는 transitions들을 싺다 deprecated map으로 지정하게 된다.
 
-이 맵을 따로 쳐 쓰지않고, 걍 새로 만드는 작업을하면서 그 FOO MAP을 덮어 버려서 안쓴다고 지정함 (이때 이 맵 자체를 ROOT MAP에서 REMOVE 하기때문에 transitions array에 들어가있는 MAP도 deprecated map으로 지정됨)
+이 맵을 따로 쳐 쓰지않고, 걍 새로 만드는 작업을하면서 그 FOO MAP을 덮어 버려서 안쓴다고 지정한다 (이때 이 맵 자체를 ROOT MAP에서 REMOVE 하기때문에 transitions array에 들어가있는 MAP도 deprecated map으로 지정된다)
 
-그렇게 되서 덮어버리면 ROOT -> {FOO:Object} 맵을 가지고있는걸로 바뀜
+그렇게 되서 덮어버리면 ROOT -> {FOO:Object} 맵을 가지고있는걸로 바뀌게 된다
 그 상태에서 이제 sealed symbols가 dictionary 형태인 객체의 MAP이 바뀐다면? root의 foo transition를 바꾸게되고 그 이후에 sealeds kind를 가진 객체의 elements를 바꿀라하니까
-findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 OOB가 일어남
+findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 type confusion
