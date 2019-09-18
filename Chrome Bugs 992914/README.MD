@@ -1,33 +1,11 @@
 https://chromium-review.googlesource.com/c/v8/v8/+/1760976
 
-<code>
-function f() {
-    let o = {foo: 1.1};
-    o[5] = 5; //keyed v12 0x8fadaa0bdd9
-    Object.seal(o);
-    
-    let t = {foo: 2.2};
-    
-    Object.preventExtensions(t);
-    Object.seal(t);
-    let retarget = {foo: Object}; //store
-    t[0] = 0x434343;
-    
-    o[0] = 0x4242; //keyed
-}
-
-for(let i = 0 ; i < 5000;i++)
-	console.log(i);
-
-console.log(f());
-</code>
 
 name store storeic_miss
 idx store keyedstoreic_miss
-
 MigrateInstance  keyedstoreic_miss migration_target setting ~~
-
 keyedstoreic_miss(elements store) -> map is deprecated -> map migration_target set
+분석이 잘못된 부분이 있을수도 있습니다 ㅠㅠ 
 
 
 1. 기본 사이즈, prototype가 ROOT 맵이랑 다를때
@@ -35,7 +13,7 @@ keyedstoreic_miss(elements store) -> map is deprecated -> map migration_target s
 3. ELEMENTS KIND가 다르고 && 넣는 KIND가 SLOW KIND가 아니고 && (받는 OBJECT KIND가 FAST KIND인 상태에서 TYPE를 바꿔야할때) -> 타입을 바꿔야하는지 체크(안바꿔도된다면 그냥 END ~)
 4. *ROOT Deatils에 속해있는 데이터를 바꿀라할때 -> ROOT MAP에서 KIND던 LOCATION이던 바뀐거면 맵 안바꿈 (ROOT가 '주' BASE가 되기때문에 ㅇㅇ) *만약 KIND나 LOCATION이 같다면 미리 details 설정을 바꿔줌
 
-(정리하면 걍 details 타입이나 elements 타입이나 바꿔야하는지 체크도 한다생각하면될듯), MAP이 완전히 달라서 BASE로 납두고 만드는 상황이 아니라 걍 새로 만들어야할때도 걍 넘어감
+-> 맵을 가져와서 덮어쓰거나 재활용? 을 해야 한다면 그 맵을 가지고와서 UPDATE 시키고, 없다면 ConstructNewMap으로 넘어가서 맵을 새로만듬
 
 
 target map
@@ -68,4 +46,4 @@ ROOT에는 FOO를 가지고있는게 있음 REPRESIONS같은것이 다를뿐
 
 그렇게 되서 덮어버리면 ROOT -> {FOO:Object} 맵을 가지고있는걸로 바뀜
 그 상태에서 이제 sealed symbols가 dictionary 형태인 객체의 MAP이 바뀐다면? root의 foo transition를 바꾸게되고 그 이후에 sealeds kind를 가진 객체의 elements를 바꿀라하니까
-findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 OOB가 일어남 ㅈㅈ ~~
+findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 OOB가 일어남
