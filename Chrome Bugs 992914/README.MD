@@ -47,4 +47,5 @@ ROOT에는 FOO를 가지고있는게 있음 REPRESIONS같은것이 다를뿐
 
 1. MAP을 덮어버리면 ROOT -> {FOO:Object} 맵을 가지고있는걸로 바뀌게 된다
 2. 그 상태에서 sealed symbols가 dictionary 형태인 객체의 MAP이 바뀐다면? root의 foo transition를 바뀌게 된다
-3, sealeds kind를 가진 객체의 elements를 바꿀라하니까 findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 type confusion이 일어난다
+3, sealeds kind를 가진 객체의 elements를 바꿀라하니까 findtargetMap으로 sealed symbols와 맞는 MAP을 찾게됨으로 
+   sealed symbols이지만 dictonary elements kind를 가지고있는 객체를 재활용하게됨으로 type confusion이 일어난다
