@@ -1,7 +1,7 @@
-SC::DFG::performGlobalCSE addWrites
-InvalidationPointInjection writesOverlap() -> DFGClobberize.cpp
-mFixedButterflyAccessUncaging -> accessesOverlap
-LICM -> doesWrites, readsOverlap
+<code>SC::DFG::performGlobalCSE addWrites</code>
+<code>InvalidationPointInjection writesOverlap() -> DFGClobberize.cpp</code>
+<code>mFixedButterflyAccessUncaging -> accessesOverlap</code>
+<code>LICM -> doesWrites, readsOverlap</code>
 
 ----> clobberize call
 
