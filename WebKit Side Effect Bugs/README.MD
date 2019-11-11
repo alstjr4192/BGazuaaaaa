@@ -12,6 +12,8 @@ CFA -> JSC::DFG::AbstractInterpreter<JSC::DFG::InPlaceAbstractState>::clobberStr
 
 CVE-2018-4233 CreateThis Proxy Callback side effect bugs
 
+CVE-2018-4162 CompareEQ side effect bugs
+
 bugs id 179212 for..in loop Proxy getPrototypeOf side effect bugs
 
 etc ~~
